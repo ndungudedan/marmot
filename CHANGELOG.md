@@ -27,13 +27,13 @@
 
 ### Breaking changes
 
-- **Encoding format change**: KeyPackage (kind:443) and Welcome (kind:444) events now support tag-based dual-format encoding for the `content` field:
-  - **Base64**: `["encoding", "base64"]` tag present, content is base64-encoded (preferred, ~33% smaller)
-  - **Hex (default)**: No `encoding` tag or `["encoding", "hex"]`, content is hex-encoded (backward compatible)
-
-  The tag-based approach eliminates ambiguity for strings like `deadbeef` that are valid in both hex and base64 but decode to different bytes. Implementations MUST support reading both formats. New implementations SHOULD use base64 encoding with the `["encoding", "base64"]` tag.
-
 ### Changed
+
+- **Encoding format migration**: KeyPackage (kind:443) and Welcome (kind:444) events are transitioning from hex to base64 encoding for the `content` field. The encoding format is specified by the `encoding` tag:
+  - `["encoding", "base64"]` - Content is base64-encoded (~33% smaller, **recommended for new implementations**)
+  - `["encoding", "hex"]` or tag absent - Content is hex-encoded (**deprecated**, supported for backward compatibility only)
+
+  Implementations MUST support reading both formats during the transition period. New implementations MUST use base64 encoding. Hex encoding will be removed in a future version.
 
 ### Added
 

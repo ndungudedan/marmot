@@ -176,9 +176,9 @@ In most cases, it's assumed that clients implementing this NIP will manage the c
 }
 ```
 
-- The `content` field is the serialized `KeyPackageBundle` from MLS, encoded as either hex or base64. The encoding format is specified by the `encoding` tag:
-  - `["encoding", "base64"]` - Content is base64-encoded (preferred, ~33% smaller)
-  - `["encoding", "hex"]` or tag absent - Content is hex-encoded (legacy default)
+- The `content` field is the serialized `KeyPackageBundle` from MLS. New implementations MUST use base64 encoding. The encoding format is specified by the `encoding` tag:
+  - `["encoding", "base64"]` - Content is base64-encoded (~33% smaller, **required for new implementations**)
+  - `["encoding", "hex"]` or tag absent - Content is hex-encoded (**deprecated**, for backward compatibility only)
 - The `mls_protocol_version` tag is required and MUST be the version number of the MLS protocol version being used. For now, this is `1.0`.
 - The `ciphersuite` tag is the value of the MLS ciphersuite that this KeyPackage Event supports. [Read more about ciphersuites in MLS](https://www.rfc-editor.org/rfc/rfc9420.html#name-mls-cipher-suites).
 - The `extensions` tag is an array of MLS extension IDs that this KeyPackage Event supports. [Read more about MLS extensions](https://www.rfc-editor.org/rfc/rfc9420.html#name-extensions).
@@ -234,9 +234,9 @@ Clients creating the Welcome Event SHOULD wait until they have received acknowle
 }
 ```
 
-- The `content` field is required and is a serialized MLSMessage object containing the MLS `Welcome` object, encoded as either hex or base64. The encoding format is specified by the `encoding` tag:
-  - `["encoding", "base64"]` - Content is base64-encoded (preferred, ~33% smaller)
-  - `["encoding", "hex"]` or tag absent - Content is hex-encoded (legacy default)
+- The `content` field is required and is a serialized MLSMessage object containing the MLS `Welcome` object. New implementations MUST use base64 encoding. The encoding format is specified by the `encoding` tag:
+  - `["encoding", "base64"]` - Content is base64-encoded (~33% smaller, **required for new implementations**)
+  - `["encoding", "hex"]` or tag absent - Content is hex-encoded (**deprecated**, for backward compatibility only)
 - The `e` tag is required and is the ID of the KeyPackage Event used to add the user to the group.
 - The `relays` tag is required and is a list of relays clients should query for Group Events.
 
